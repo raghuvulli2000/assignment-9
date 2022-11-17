@@ -1,6 +1,7 @@
 package com.example.yelp.api
 
 import com.example.yelp.Models.DetailModel.Detail
+import com.example.yelp.Models.GeoLocationModel.GeoLocationResponse
 import com.example.yelp.Models.OptionsModel.OptionsResponse
 import com.example.yelp.Models.SearchModel.TableData
 import retrofit2.Response
@@ -34,6 +35,12 @@ interface YelpApi {
         @Query("id")
         id: String = "Pizza"
     ): Response<OptionsResponse>
+
+    @GET("geoloc")
+    suspend fun getGeoLocation(
+        @Query("loc")
+        loc: String = "LA"
+    ): Response<GeoLocationResponse>
 
 
 

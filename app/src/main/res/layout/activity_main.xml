@@ -29,7 +29,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:text=""
         android:hint="Distance"
         app:layout_constraintBottom_toTopOf="@+id/tvcategory"
@@ -94,7 +94,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etLocation" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/etKeyword"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
