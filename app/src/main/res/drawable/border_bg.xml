@@ -12,12 +12,12 @@
             <!-- setting the thickness of shadow (positive value will give shadow on that side) -->
 
             <padding
-                android:bottom="10dp"
+                android:bottom="5dp"
                 android:left="-2dp"
                 android:right="-2dp"
                 android:top="-2dp" />
 
-            <corners android:radius="-1dp" />
+            <corners android:radius="1dp" />
         </shape>
     </item>
 
@@ -25,8 +25,8 @@
 
     <item>
         <shape>
-            <solid android:color="#fff" />
-            <corners android:radius="-1dp" />
+            <solid android:color="#CDCBCB" />
+            <corners android:radius="2dp" />
         </shape>
     </item>
 

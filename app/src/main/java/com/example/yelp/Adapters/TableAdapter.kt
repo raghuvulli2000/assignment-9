@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.yelp.Models.SearchModel.Business
 import com.example.yelp.R
 import com.example.yelp.databinding.ActivityMainBinding
 import com.example.yelp.databinding.BusinessTableItemViewBinding
+import kotlin.math.roundToInt
 
 class TableAdapter(private val context: Context,
                    private val dataset: List<Business>): RecyclerView.Adapter<TableAdapter.TableViewHolder>() {
@@ -35,8 +37,12 @@ class TableAdapter(private val context: Context,
             with(dataset[position]){
                 Glide.with(binding.root).load(this.image_url).into(binding.ivImg)
                 binding.tvSno.text = (position + 1).toString()
-                binding.tvDistance.text = (this.distance / 1609.9).toString()
+                binding.tvDistance.text = (((this.distance / 1609.9)*100).roundToInt()/100).toString()
                 binding.tvRating.text = this.rating.toString()
+                binding.tvTitle.text = this.name.toString()
+                binding.root.setOnClickListener {
+                    Toast.makeText(it.context, "Clicked ${this.name}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
