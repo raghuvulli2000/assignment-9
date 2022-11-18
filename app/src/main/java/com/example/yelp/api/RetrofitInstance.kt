@@ -8,6 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitInstance {
 
     companion object {
+
+
         private val retrofit by lazy {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -23,6 +25,11 @@ class RetrofitInstance {
 
         val api by lazy {
             retrofit.create(YelpApi::class.java)
+        }
+
+
+        val reviewapi by lazy {
+            retrofit.create(YelpReviewsApi::class.java)
         }
     }
 
