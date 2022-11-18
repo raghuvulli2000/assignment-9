@@ -17,7 +17,7 @@ class InfoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-          
+
             detailData =  Gson().fromJson(it.getString("detailData"), Detail::class.java)
         }
         Log.d(TAG, detailData.toString())

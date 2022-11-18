@@ -14,13 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Yelp"
         tools:targetApi="31">
-        <activity
-            android:name=".DetailsActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -34,8 +28,15 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="AIzaSyAf9HYc3YRTU8xukJ_HASFzWlRqZQY8kAk" />
 
+        <activity
+            android:name=".DetailsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".yelp_splash_screen_1"
             android:exported="true">
