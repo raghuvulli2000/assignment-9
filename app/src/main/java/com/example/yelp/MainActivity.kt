@@ -36,6 +36,11 @@ class MainActivity : AppCompatActivity() {
 
 
         var job: Job? = null
+        binding.etKeyword.setOnFocusChangeListener { view, hasFocus ->
+            if(!hasFocus){
+                job?.cancel()
+            }
+        }
         binding.etKeyword.addTextChangedListener {
             job?.cancel()
             job = MainScope().launch {
