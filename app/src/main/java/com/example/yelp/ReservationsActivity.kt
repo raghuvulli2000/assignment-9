@@ -11,6 +11,7 @@ import com.example.yelp.Models.ReservationModel
 import com.example.yelp.SwipeGestures.SwipeGesture
 import com.example.yelp.databinding.ActivityDetailsBinding
 import com.example.yelp.databinding.ActivityReservationsBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 class ReservationsActivity : AppCompatActivity() {
@@ -32,6 +33,7 @@ class ReservationsActivity : AppCompatActivity() {
                    ItemTouchHelper.LEFT -> {
                     //   reservationsList.removeAt(viewHolder.absoluteAdapterPosition)
                        adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                       Snackbar.make(findViewById(android.R.id.content), "Removing Existing Reservation", Snackbar.LENGTH_LONG).show()
 
                    }
 

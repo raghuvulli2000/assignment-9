@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.yelp.Models.Reservation
 import com.example.yelp.Models.ReservationModel
 import com.example.yelp.databinding.ReservationItemViewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 
 class ReservationAdapter(val context: Context, val data: MutableList<Reservation>) : RecyclerView.Adapter<ReservationAdapter.ReservationsViewHolder>(){
@@ -30,6 +31,7 @@ class ReservationAdapter(val context: Context, val data: MutableList<Reservation
         var editor: SharedPreferences.Editor = sharedpref.edit()
         editor.putString("reservations", Gson().toJson(ReservationModel(data)))
         editor.commit()
+
     }
 
     override fun onBindViewHolder(holder: ReservationsViewHolder, position: Int) {
