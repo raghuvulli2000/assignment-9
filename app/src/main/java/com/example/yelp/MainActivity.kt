@@ -1,5 +1,6 @@
 package com.example.yelp
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.example.yelp.Models.OptionsModel.OptionsResponse
 import com.example.yelp.Models.SearchModel.Business
 import com.example.yelp.api.RetrofitInstance
 import com.example.yelp.databinding.ActivityMainBinding
+import com.google.gson.Gson
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
@@ -151,7 +153,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.ic_calendar -> Toast.makeText(this, "YouClicked Toolbar Reservation Icon", Toast.LENGTH_SHORT).show()
+            R.id.ic_calendar -> {
+            //    Toast.makeText(this, "YouClicked Toolbar Reservation Icon", Toast.LENGTH_SHORT).show()
+                var intent: Intent = Intent(this@MainActivity, ReservationsActivity::class.java)
+                this@MainActivity.startActivity(intent)
+            }
         }
         return true
     }

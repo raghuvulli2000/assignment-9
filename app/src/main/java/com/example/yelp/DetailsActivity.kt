@@ -1,10 +1,14 @@
 package com.example.yelp
 
+import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.example.yelp.Adapters.ViewPagerAdapter
 import com.example.yelp.Models.DetailModel.Detail
@@ -71,4 +75,27 @@ class DetailsActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_app_bar_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.ic_facebook -> {
+               // Toast.makeText(this, "Facebook Icon", Toast.LENGTH_SHORT).show()
+                val uri: Uri = Uri.parse("http://www.facebook.com/sharer.php?u=${detailData?.url}")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }
+            R.id.ic_twitter -> {
+               // Toast.makeText(this, "Twitter Icon", Toast.LENGTH_SHORT).show()
+                val uri: Uri = Uri.parse("http://twitter.com/intent/tweet/?text=Check ${detailData?.name}" + " on Yelp. &amp;url=${detailData?.url}")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+            }
+            else -> return false
+        }
+        return true
+    }
+
 }
