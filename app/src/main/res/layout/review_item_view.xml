@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/tvReviewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        />
+    <TextView
+        android:id="@+id/tvReviewRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rating"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tvReviewText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="E:\Yelp>git commit -m [main bd51b05] Reservation Dialog Added and Date Picker Dialog created
+ 4 files changed, 119 insertions(+), 8 deletions(-)
+ create mode 100644 app/src/main/res/layout/reservation_dialog.xml"
+        android:paddingTop="20dp"
+        android:paddingBottom="15dp"/>
+    <TextView
+        android:id="@+id/tvReviewData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="2022-10-08"
+        android:textSize="16sp"/>
+
+</LinearLayout>
