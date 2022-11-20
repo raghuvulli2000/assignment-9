@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -76,7 +77,7 @@ class InfoFragment : Fragment() {
 //
 //        }
 
-
+            setInfoDetails()
 
         binding!!.btnReserve.setOnClickListener {
             calendar.set(Calendar.YEAR, currYear)
@@ -132,6 +133,40 @@ class InfoFragment : Fragment() {
         return binding?.root
     }
 
+    private fun setInfoDetails() {
+        binding?.tvAddress?.text = detailData!!.location.display_address.joinToString(" ")
+        detailData!!.display_phone?.let {
+            if(it.isNotEmpty()) {
+                binding?.tvPhno?.text =it
+            }
+        }
+
+        detailData!!.hours?.let {
+            it[0].is_open_now?.let {
+                if(it)
+                {
+                    binding?.tvStatus?.text = "Open Now"
+                    binding?.tvStatus?.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+                }
+                else{
+                    binding?.tvStatus?.text = "Closed"
+                    binding?.tvStatus?.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                }
+            }
+        }
+
+
+        detailData!!.price?.let {
+            binding?.tvPrice?.text = it
+        }
+
+        detailData!!.categories?.let {
+            val catList = it.map {
+                it.title
+            }
+            binding?.tvCategory?.text = catList.joinToString("|")
+        }
+    }
 
 
     fun addReservation(resDialogView : View){
