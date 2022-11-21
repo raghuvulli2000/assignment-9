@@ -167,7 +167,7 @@ class InfoFragment : Fragment() {
             val catList = it.map {
                 it.title
             }
-            binding?.tvCategory?.text = catList.joinToString("|")
+            binding?.tvCategory?.text = catList.joinToString(" | ")
         }
 
         binding?.tvLink?.text = HtmlCompat.fromHtml(String.format("<a href=\'%s\'>Business Link</a>", detailData!!.url), HtmlCompat.FROM_HTML_MODE_LEGACY)

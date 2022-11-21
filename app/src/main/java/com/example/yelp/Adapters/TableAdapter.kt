@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 class TableAdapter(private val context: Context,
-                   private val dataset: List<Business>): RecyclerView.Adapter<TableAdapter.TableViewHolder>() {
+                   private val dataset: MutableList<Business>): RecyclerView.Adapter<TableAdapter.TableViewHolder>() {
 
     class TableViewHolder(val binding: BusinessTableItemViewBinding) : RecyclerView.ViewHolder(binding.root)
 

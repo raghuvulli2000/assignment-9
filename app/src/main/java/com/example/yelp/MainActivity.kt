@@ -2,6 +2,7 @@ package com.example.yelp
 
 import android.content.Intent
 import android.graphics.Color
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.example.yelp.Adapters.TableAdapter
 import com.example.yelp.Models.OptionsModel.OptionsResponse
@@ -29,10 +31,15 @@ class MainActivity : AppCompatActivity() {
     val spinnerText = listOf("Default", "Arts and Entertainment","Health and Medical","Hotel and Travel","Food","Professional Services")
     val spinnerValues = listOf<String>("All","arts","health","hotelstravel","food","professional")
     var autoOptions = listOf<String>("All","arts","health","hotelstravel","food","professional")
+    var recycler_data: MutableList<Business> = mutableListOf()
+    private lateinit var adapter: TableAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.adapter = TableAdapter(this@MainActivity,recycler_data)
+        binding.rvList.adapter = this.adapter
         val adapter = ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, spinnerText)
         binding.spCategory.adapter = adapter
 
@@ -43,6 +50,17 @@ class MainActivity : AppCompatActivity() {
                 job?.cancel()
             }
         }
+
+        binding.btnClear.setOnClickListener {
+            binding.etKeyword.text.clear()
+            binding.etDistance.text.clear()
+            binding.etLocation.text.clear()
+            binding.etLocation.visibility = View.VISIBLE
+            binding.cbLocation.isChecked = false
+            recycler_data.clear()
+            this.adapter.notifyDataSetChanged()
+        }
+
         binding.etKeyword.addTextChangedListener {
             job?.cancel()
             job = MainScope().launch {
@@ -79,31 +97,12 @@ class MainActivity : AppCompatActivity() {
             binding.btnSubmit.requestFocus()
 
             if(CheckFields()){
-                Toast.makeText(this, "All Fields are Validated Correct", Toast.LENGTH_SHORT).show()
-                var recycler_data: List<Business>
-                Log.d("Main Activity", "First Click Listener");
-                Toast.makeText(this, "Button Clicked", Toast.LENGTH_LONG).show();
-                MainScope().launch {
-                    val locRes = RetrofitInstance.api.getGeoLocation(binding.etLocation.text.toString())
-                    val results = RetrofitInstance.api.getSearchResults(locRes.body()!!.results[0].geometry.location.lat.toString(),
-                        locRes.body()!!.results[0].geometry.location.lng.toString(),
-                        binding.etKeyword.text.toString(),
-                        (binding.etDistance.text.toString().toInt()*1609.09).toInt().toString(),
-                        spinnerValues[binding.spCategory.selectedItemPosition])
-                    Log.d("Retrofit", results.toString())
-
-                    if(results.isSuccessful){
-
-                        Log.d("Retrofit Call", results.body()!!.businesses.size.toString())
-
-                            recycler_data = results.body()!!.businesses
-                            binding.rvList.adapter = TableAdapter(this@MainActivity,recycler_data)
-
+                    if(!binding.cbLocation.isChecked){
+                        notChecked()
                     }
-                    else{
-                        Log.d("Retrofit Call", "Falied Check Logs")
+                else{
+                    checkedBox()
                     }
-                }
             }
             else{
                 Toast.makeText(this, "Some fields are required", Toast.LENGTH_SHORT).show()
@@ -161,7 +160,63 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+    private fun checkedBox(){
+      //  Toast.makeText(this, "All Fields are Validated Correct", Toast.LENGTH_SHORT).show()
+       // var recycler_data: List<Business>
+        Log.d("Main Activity", "First Click Listener");
+      //  Toast.makeText(this, "Button Clicked", Toast.LENGTH_LONG).show();
+        MainScope().launch {
+            val locRes = RetrofitInstance.locaction.getCurrentLocation()
+            val results = RetrofitInstance.api.getSearchResults(locRes.body()!!.loc.split(",")[0],
+                locRes.body()!!.loc.split(",")[1],
+                binding.etKeyword.text.toString(),
+                (binding.etDistance.text.toString().toInt()*1609.09).toInt().toString(),
+                spinnerValues[binding.spCategory.selectedItemPosition])
+            Log.d("Retrofit", results.toString())
 
+            if(results.isSuccessful){
+
+                Log.d("Retrofit Call", results.body()!!.businesses.size.toString())
+
+                recycler_data.clear()
+                recycler_data.addAll(results.body()!!.businesses as MutableList<Business>)
+               // binding.rvList.adapter = TableAdapter(this@MainActivity,recycler_data)
+                adapter.notifyDataSetChanged()
+            }
+            else{
+                Log.d("Retrofit Call", "Falied Check Logs")
+            }
+        }
+    }
+    private fun notChecked(){
+       // Toast.makeText(this, "All Fields are Validated Correct", Toast.LENGTH_SHORT).show()
+      //  var recycler_data: List<Business>
+        Log.d("Main Activity", "First Click Listener");
+    //    Toast.makeText(this, "Button Clicked", Toast.LENGTH_LONG).show();
+        MainScope().launch {
+            val locRes = RetrofitInstance.api.getGeoLocation(binding.etLocation.text.toString())
+            val results = RetrofitInstance.api.getSearchResults(locRes.body()!!.results[0].geometry.location.lat.toString(),
+                locRes.body()!!.results[0].geometry.location.lng.toString(),
+                binding.etKeyword.text.toString(),
+                (binding.etDistance.text.toString().toInt()*1609.09).toInt().toString(),
+                spinnerValues[binding.spCategory.selectedItemPosition])
+            Log.d("Retrofit", results.toString())
+
+            if(results.isSuccessful){
+
+                Log.d("Retrofit Call", results.body()!!.businesses.size.toString())
+
+                recycler_data.clear()
+                recycler_data.addAll(results.body()!!.businesses as MutableList<Business>)
+              //  binding.rvList.adapter = TableAdapter(this@MainActivity,recycler_data)
+               adapter.notifyDataSetChanged()
+
+            }
+            else{
+                Log.d("Retrofit Call", "Falied Check Logs")
+            }
+        }
+    }
     private fun CheckFields() : Boolean {
         if(binding.etKeyword.length() == 0){
             binding.etKeyword.error = "This field is required"
@@ -171,10 +226,11 @@ class MainActivity : AppCompatActivity() {
             binding.etDistance.error = "This field is required"
             return false
         }
-        if(binding.etLocation.length() == 0){
+        if(binding.etLocation.isVisible &&  binding.etLocation.length() == 0){
             binding.etLocation.error = "This field is required"
             return false
         }
+
         return true
     }
 
