@@ -43,6 +43,7 @@ class TableAdapter(private val context: Context,
     override fun onBindViewHolder(holder: TableViewHolder, position: Int) {
         with(holder){
             with(dataset[position]){
+                Log.d("Table Adapter", dataset[position].name)
                 Glide.with(binding.root).load(this.image_url).into(binding.ivImg)
                 binding.tvSno.text = (position + 1).toString()
                 binding.tvDistance.text = (((this.distance / 1609.9)*100).roundToInt()/100).toString()

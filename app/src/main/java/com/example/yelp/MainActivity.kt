@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             binding.etLocation.text.clear()
             binding.etLocation.visibility = View.VISIBLE
             binding.cbLocation.isChecked = false
+            binding.tvNoResults.visibility = View.INVISIBLE
             recycler_data.clear()
             this.adapter.notifyDataSetChanged()
         }
@@ -165,15 +166,16 @@ class MainActivity : AppCompatActivity() {
        // var recycler_data: List<Business>
         Log.d("Main Activity", "First Click Listener");
       //  Toast.makeText(this, "Button Clicked", Toast.LENGTH_LONG).show();
-        MainScope().launch {
+        val job = MainScope().launch {
             val locRes = RetrofitInstance.locaction.getCurrentLocation()
             val results = RetrofitInstance.api.getSearchResults(locRes.body()!!.loc.split(",")[0],
                 locRes.body()!!.loc.split(",")[1],
                 binding.etKeyword.text.toString(),
                 (binding.etDistance.text.toString().toInt()*1609.09).toInt().toString(),
                 spinnerValues[binding.spCategory.selectedItemPosition])
-            Log.d("Retrofit", results.toString())
 
+            Log.d("Retrofit", results.toString())
+            binding.tvNoResults.visibility = View.INVISIBLE
             if(results.isSuccessful){
 
                 Log.d("Retrofit Call", results.body()!!.businesses.size.toString())
@@ -182,6 +184,10 @@ class MainActivity : AppCompatActivity() {
                 recycler_data.addAll(results.body()!!.businesses as MutableList<Business>)
                // binding.rvList.adapter = TableAdapter(this@MainActivity,recycler_data)
                 adapter.notifyDataSetChanged()
+                Log.d("Main Activity", adapter.itemCount.toString())
+                if(adapter.itemCount == 0){
+                    binding?.tvNoResults?.visibility = View.VISIBLE
+                }
             }
             else{
                 Log.d("Retrofit Call", "Falied Check Logs")
@@ -193,8 +199,18 @@ class MainActivity : AppCompatActivity() {
       //  var recycler_data: List<Business>
         Log.d("Main Activity", "First Click Listener");
     //    Toast.makeText(this, "Button Clicked", Toast.LENGTH_LONG).show();
-        MainScope().launch {
+        var job: Job? = null
+
+        job = MainScope().launch {
             val locRes = RetrofitInstance.api.getGeoLocation(binding.etLocation.text.toString())
+            binding.tvNoResults.visibility = View.INVISIBLE
+            if(locRes.body()?.status.equals("ZERO_RESULTS")){
+                binding.tvNoResults.visibility = View.VISIBLE
+                recycler_data.clear()
+                adapter.notifyDataSetChanged()
+                return@launch
+            }
+
             val results = RetrofitInstance.api.getSearchResults(locRes.body()!!.results[0].geometry.location.lat.toString(),
                 locRes.body()!!.results[0].geometry.location.lng.toString(),
                 binding.etKeyword.text.toString(),
@@ -210,6 +226,9 @@ class MainActivity : AppCompatActivity() {
                 recycler_data.addAll(results.body()!!.businesses as MutableList<Business>)
               //  binding.rvList.adapter = TableAdapter(this@MainActivity,recycler_data)
                adapter.notifyDataSetChanged()
+                if(adapter.itemCount == 0){
+                    binding?.tvNoResults?.visibility = View.VISIBLE
+                }
 
             }
             else{

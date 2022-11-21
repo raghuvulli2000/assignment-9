@@ -3,6 +3,8 @@ package com.example.yelp
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.core.view.size
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yelp.Adapters.ReservationAdapter
@@ -33,6 +35,10 @@ class ReservationsActivity : AppCompatActivity() {
                    ItemTouchHelper.LEFT -> {
                     //   reservationsList.removeAt(viewHolder.absoluteAdapterPosition)
                        adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                       if(adapter.itemCount == 0)
+                       {
+                           binding.tvNoResult.visibility = View.VISIBLE
+                       }
                        Snackbar.make(findViewById(android.R.id.content), "Removing Existing Reservation", Snackbar.LENGTH_LONG).show()
 
                    }
@@ -43,6 +49,12 @@ class ReservationsActivity : AppCompatActivity() {
             }
         }
         val touchHelper = ItemTouchHelper(swipeGesture)
+        binding.tvNoResult.visibility = View.INVISIBLE
+
+        if(reservationsList.size == 0)
+        {
+            binding.tvNoResult.visibility = View.VISIBLE
+        }
         touchHelper.attachToRecyclerView(binding.rvReservations)
         binding.rvReservations.adapter = adapter
 
