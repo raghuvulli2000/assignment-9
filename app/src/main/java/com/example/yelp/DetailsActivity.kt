@@ -51,8 +51,6 @@ class DetailsActivity : AppCompatActivity() {
                 reviewsData = Gson().fromJson(it, Reviews::class.java)
                 Log.d(TAG, reviewsData.toString())
             }
-
-
         }
 
         val actionbar = supportActionBar
@@ -90,7 +88,8 @@ class DetailsActivity : AppCompatActivity() {
             }
             R.id.ic_twitter -> {
                // Toast.makeText(this, "Twitter Icon", Toast.LENGTH_SHORT).show()
-                val uri: Uri = Uri.parse("http://twitter.com/intent/tweet/?text=Check ${detailData?.name}" + " on Yelp. &amp;url=${detailData?.url}")
+                Log.d("Twitter", "http://twitter.com/intent/tweet/?text=Check ${detailData?.name}\" + \" on Yelp.&&url=${detailData?.url}")
+                val uri: Uri = Uri.parse("http://twitter.com/intent/tweet/?text=Check ${detailData?.name}" + " on Yelp.&&url=${detailData?.url}")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
             else -> return false
