@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                     }
             }
             else{
-                Toast.makeText(this, "Some fields are required", Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(this, "Some fields are required", Toast.LENGTH_SHORT).show()
             }
 
 

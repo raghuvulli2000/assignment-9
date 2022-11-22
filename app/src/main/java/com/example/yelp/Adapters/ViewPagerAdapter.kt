@@ -24,7 +24,6 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter
 
         Log.d("ViewPage", detailData.toString())
         Log.d("ViewPage", reviewData.toString())
-
     }
     override fun getItemCount(): Int {
       return 3
@@ -33,7 +32,6 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter
     override fun createFragment(position: Int): Fragment {
        return when(position){
            0 -> {
-
                val infoFragment : InfoFragment = InfoFragment()
                val bundle: Bundle = Bundle()
                Log.d("ViewPage", Gson().toJson(detailData))

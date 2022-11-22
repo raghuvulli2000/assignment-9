@@ -50,7 +50,7 @@ class TableAdapter(private val context: Context,
                 binding.tvRating.text = this.rating.toString()
                 binding.tvTitle.text = this.name.toString()
                 binding.root.setOnClickListener {
-                    Toast.makeText(it.context, "Clicked ${this.name}", Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(it.context, "Clicked ${this.name}", Toast.LENGTH_SHORT).show()
                     MainScope().launch {
                         var results = RetrofitInstance.api.getBusinessDetail(dataset[position].id)
                         var reviews = RetrofitInstance.reviewapi.getBusinessDetail(dataset[position].id + "/reviews")

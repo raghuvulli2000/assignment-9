@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="No Bookings Found!"
         android:textSize="30dp"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/red"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
