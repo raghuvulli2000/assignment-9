@@ -57,8 +57,10 @@ class MainActivity : AppCompatActivity() {
             binding.etLocation.text.clear()
             binding.etLocation.visibility = View.VISIBLE
             binding.cbLocation.isChecked = false
+            binding.spCategory.setSelection(0)
             binding.tvNoResults.visibility = View.INVISIBLE
             recycler_data.clear()
+
             this.adapter.notifyDataSetChanged()
         }
 
