@@ -60,7 +60,9 @@ class MainActivity : AppCompatActivity() {
             binding.spCategory.setSelection(0)
             binding.tvNoResults.visibility = View.INVISIBLE
             recycler_data.clear()
-
+            binding.etKeyword.error = null
+            binding.etDistance.error = null
+            binding.etLocation.error = null
             this.adapter.notifyDataSetChanged()
         }
 
