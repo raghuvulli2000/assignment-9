@@ -151,7 +151,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
         android:layout_width="match_parent"
-        android:layout_height="195dp"
+        android:layout_height="210dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="10dp"
         android:scrollbars="vertical"
