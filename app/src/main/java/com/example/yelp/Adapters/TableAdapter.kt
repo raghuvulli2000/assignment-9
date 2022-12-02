@@ -37,6 +37,8 @@ class TableAdapter(private val context: Context,
 
 
     override fun getItemCount(): Int {
+        if(dataset.size > 10)
+            return 10
         return dataset.size
     }
 
