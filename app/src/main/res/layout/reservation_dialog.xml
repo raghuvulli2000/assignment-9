@@ -11,13 +11,13 @@
         android:gravity="center"
         android:text="Title"
         android:textSize="20sp"
-        android:textColor="@color/purple_500"/>
+        android:textColor="@color/red"/>
     <TextView
         android:id="@+id/tvemail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
-        android:textColor="@color/purple_500"/>
+        android:textColor="@color/red"/>
     <EditText
         android:id="@+id/etemail"
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
-        android:textColor="@color/purple_500"/>
+        android:textColor="@color/red"/>
     <EditText
         android:id="@+id/etdate"
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Time"
-        android:textColor="@color/purple_500"/>
+        android:textColor="@color/red"/>
     <EditText
         android:id="@+id/ettime"
         android:layout_width="match_parent"

@@ -11,9 +11,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface YelpReviewsApi {
-
-
-
     @GET("businessid")
     suspend fun getBusinessDetail(
         @Query("id")
